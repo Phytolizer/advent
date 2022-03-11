@@ -12,6 +12,6 @@ typedef struct {
     size_t which;
 } advent_line_iterator_t;
 
-advent_line_iterator_t advent_line_iterator_new(FILE* stream);
+advent_line_iterator_t advent_line_iterator_new(const char* file_path);
 char* advent_line_iterator_next(advent_line_iterator_t* iter);
 void advent_line_iterator_close(advent_line_iterator_t* iter);

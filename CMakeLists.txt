@@ -23,6 +23,11 @@ function(advent_target NAME)
         "${NAME}" PRIVATE advent ${ADVENT_TARGET_EXTRA_LIBRARIES}
     )
     target_compile_features("${NAME}" PRIVATE c_std_11)
+    set(ADVENT_DAY_INPUT "${PROJECT_SOURCE_DIR}/modules/${NAME}/input.txt")
+    configure_file("cmake/config.h.cin" "${NAME}-include/config.h")
+    target_include_directories(
+        "${NAME}" PRIVATE "${PROJECT_BINARY_DIR}/${NAME}-include"
+    )
 endfunction()
 
 advent_target(day01 SOURCES main.c)

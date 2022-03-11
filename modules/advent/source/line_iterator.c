@@ -9,9 +9,9 @@
 
 #define ERRBUF_SIZE 64
 
-advent_line_iterator_t advent_line_iterator_new(FILE* stream) {
+advent_line_iterator_t advent_line_iterator_new(const char* file_path) {
     return (advent_line_iterator_t){
-        .stream = stream,
+        .stream = fopen(file_path, "r"),
         .line = NULL,
         .line_length = 0,
         .line_capacity = 0,

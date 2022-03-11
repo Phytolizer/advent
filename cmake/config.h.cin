@@ -1,0 +1,3 @@
+#pragma once
+
+#define ADVENT_DAY_INPUT "@ADVENT_DAY_INPUT@"
