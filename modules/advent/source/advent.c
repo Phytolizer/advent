@@ -17,6 +17,7 @@ try_size_t advent_getline(char** p_line, size_t* p_capacity, FILE* stream) {
             return (try_size_t){.error = ENOMEM};
         }
     }
+    (*p_line)[0] = '\0';
     size_t len = 0;
     while (true) {
         char* fgets_result =
