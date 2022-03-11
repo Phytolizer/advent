@@ -19,10 +19,6 @@ advent_line_iterator_t advent_line_iterator_new(FILE* stream) {
     };
 }
 
-bool advent_line_iterator_is_ok(const advent_line_iterator_t* iter) {
-    return iter->stream != NULL;
-}
-
 char* advent_line_iterator_next(advent_line_iterator_t* iter) {
     try_size_t getline_result =
         advent_getline(&iter->line, &iter->line_capacity, iter->stream);
