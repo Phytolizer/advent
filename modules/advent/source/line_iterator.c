@@ -24,7 +24,7 @@ bool advent_line_iterator_is_ok(const advent_line_iterator_t* iter) {
 }
 
 char* advent_line_iterator_next(advent_line_iterator_t* iter) {
-    try_int64_t getline_result =
+    try_size_t getline_result =
         advent_getline(&iter->line, &iter->line_capacity, iter->stream);
     if (getline_result.error != 0) {
         char errbuf[ERRBUF_SIZE];
