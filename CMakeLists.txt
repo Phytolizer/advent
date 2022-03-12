@@ -18,16 +18,17 @@ function(advent_target NAME)
     set(ADVENT_TARGET_SOURCES ${ADVENT_TARGET_EXTRA_SOURCES})
     list(APPEND ADVENT_TARGET_SOURCES main.c)
     list(TRANSFORM ADVENT_TARGET_SOURCES PREPEND "modules/${NAME}/source/")
-    add_executable("${NAME}" ${ADVENT_TARGET_SOURCES})
+    string(REPLACE "/" "_" TARGET_NAME "${NAME}")
+    add_executable("${TARGET_NAME}" ${ADVENT_TARGET_SOURCES})
     target_link_libraries(
-        "${NAME}" PRIVATE advent ${ADVENT_TARGET_EXTRA_LIBRARIES}
+        "${TARGET_NAME}" PRIVATE advent ${ADVENT_TARGET_EXTRA_LIBRARIES}
     )
-    target_compile_features("${NAME}" PRIVATE c_std_11)
+    target_compile_features("${TARGET_NAME}" PRIVATE c_std_11)
     set(ADVENT_DAY_INPUT "${PROJECT_SOURCE_DIR}/modules/${NAME}/input.txt")
     configure_file("cmake/config.h.cin" "${NAME}-include/config.h")
     target_include_directories(
-        "${NAME}" PRIVATE "${PROJECT_BINARY_DIR}/${NAME}-include"
+        "${TARGET_NAME}" PRIVATE "${PROJECT_BINARY_DIR}/${NAME}-include"
     )
 endfunction()
 
-advent_target(day01 SOURCES main.c)
+advent_target(2015/day01 SOURCES main.c)
