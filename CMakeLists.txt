@@ -31,4 +31,4 @@ function(advent_target NAME)
     )
 endfunction()
 
-advent_target(2015/day01 SOURCES main.c)
+advent_target(2015/day01)
