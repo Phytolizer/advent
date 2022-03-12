@@ -6,7 +6,20 @@ project(
     HOMEPAGE_URL "https://github.com/Phytolizer/advent.git"
 )
 
-set(ADVENT_SRC advent.c line_iterator.c)
+include(FindPkgConfig)
+include(FetchContent)
+
+pkg_search_module(PCRE2 libpcre2-8)
+if(NOT PCRE2_FOUND)
+    FetchContent_Declare(
+        pcre2
+        GIT_REPOSITORY "https://github.com/PhilipHazel/pcre2.git"
+        GIT_TAG "pcre2-10.39"
+    )
+    FetchContent_MakeAvailable(pcre2)
+endif()
+
+set(ADVENT_SRC advent.c line_iterator.c math.c string.c)
 list(TRANSFORM ADVENT_SRC PREPEND "modules/advent/source/")
 add_library(advent ${ADVENT_SRC})
 target_include_directories(advent PUBLIC "modules/advent/include")
@@ -29,6 +42,10 @@ function(advent_target NAME)
     target_include_directories(
         "${TARGET_NAME}" PRIVATE "${PROJECT_BINARY_DIR}/${NAME}-include"
     )
+    target_compile_definitions(
+        "${TARGET_NAME}" PRIVATE "PCRE2_CODE_UNIT_WIDTH=8"
+    )
 endfunction()
 
 advent_target(2015/day01)
+advent_target(2015/day02)
