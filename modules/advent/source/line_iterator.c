@@ -1,6 +1,7 @@
 #include "advent/line_iterator.h"
 
 #include "advent.h"
+#include "advent/string.h"
 
 #include <stdint.h>
 #include <stdio.h>
@@ -13,13 +14,12 @@ advent_line_iterator_t advent_line_iterator_new(const char* file_path) {
     return (advent_line_iterator_t){
         .stream = fopen(file_path, "r"),
         .line = NULL,
-        .line_length = 0,
         .line_capacity = 0,
         .which = 0,
     };
 }
 
-char* advent_line_iterator_next(advent_line_iterator_t* iter) {
+advent_string_t advent_line_iterator_next(advent_line_iterator_t* iter) {
     try_size_t getline_result =
         advent_getline(&iter->line, &iter->line_capacity, iter->stream);
     if (getline_result.error != 0) {
@@ -29,10 +29,10 @@ char* advent_line_iterator_next(advent_line_iterator_t* iter) {
         exit(EXIT_FAILURE);
     }
     if (getline_result.value == 0) {
-        return NULL;
+        return ADVENT_STRING(NULL, 0);
     }
-    iter->line_length = getline_result.value;
-    return iter->line;
+    iter->which += 1;
+    return ADVENT_STRING(iter->line, getline_result.value);
 }
 
 void advent_line_iterator_close(advent_line_iterator_t* iter) {
